@@ -79,43 +79,4 @@ public class EMFCommand extends BaseCommand {
         }
     }
 
-    @Subcommand("shop")
-    @CommandPermission(UserPerms.SHOP)
-    @Description("%desc_general_shop")
-    public void onShop(final CommandSender sender, @Optional final OnlinePlayer onlinePlayer) {
-        if (MainConfig.getInstance().isEconomyDisabled()) {
-            new Message(ConfigMessage.ECONOMY_DISABLED).broadcast(sender);
-            return;
-        }
-
-        if (onlinePlayer == null) {
-            if (!(sender instanceof Player player)) {
-                new Message("&cYou must specify a player when running from console.").broadcast(sender);
-                return;
-            }
-            new SellGUI(player, SellGUI.SellState.NORMAL, null).open();
-            return;
-        }
-
-        if (sender.hasPermission(AdminPerms.ADMIN)) {
-            new SellGUI(onlinePlayer.player, SellGUI.SellState.NORMAL, null).open();
-            Message message = new Message(ConfigMessage.ADMIN_OPEN_FISH_SHOP);
-            message.setPlayer(onlinePlayer.player);
-            message.broadcast(sender);
-        }
-    }
-
-    @Subcommand("sellall")
-    @CommandPermission(UserPerms.SELL_ALL)
-    @Description("%desc_general_sellall")
-    public void onSellAll(final Player sender) {
-        if (MainConfig.getInstance().isEconomyDisabled()) {
-            new Message(ConfigMessage.ECONOMY_DISABLED).broadcast(sender);
-            return;
-        }
-
-        new SellHelper(sender.getInventory(), sender).sellFish();
-    }
-
-
 }

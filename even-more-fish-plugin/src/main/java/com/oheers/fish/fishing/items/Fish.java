@@ -217,8 +217,9 @@ public class Fish implements Cloneable {
             return;
         }
 
+        Player finalPlayer = player;
         Runnable fallback = () -> {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 1));
+            finalPlayer.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 1));
             EvenMoreFish.getInstance().getLogger().warning("Invalid potion effect specified. Defaulting to Speed 2 for 5 seconds.");
         };
 
@@ -244,7 +245,8 @@ public class Fish implements Cloneable {
                 return;
             }
             // Check if the requested player is null
-            Player player = Bukkit.getPlayer(this.fisherman);
+            player = Bukkit.getPlayer(this.fisherman);
+
             if (player == null) {
                 return;
             }
